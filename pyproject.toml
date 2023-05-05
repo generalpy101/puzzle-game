@@ -1,0 +1,35 @@
+[tool.black]
+line-length = 88
+target-version = ['py36', 'py37', 'py38','py39','py310','py311']
+include = '\.pyi?$'
+exclude = '''
+/(
+  \.toml
+  |\.sh
+  |\.git
+  |\.ini
+  |Dockerfile
+  |Jenkinfile
+)/
+'''
+
+[project]
+name = "treasure_hunt"
+description = "Module description"
+version = "1.0.0"
+authors = [
+  { name = "Author", email = "a@b.com"}
+]
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "pylint",
+    "pre-commit",
+    "pytest",
+    "pytest-cov"
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"

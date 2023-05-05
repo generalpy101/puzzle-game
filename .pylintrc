@@ -1,0 +1,7 @@
+[MASTER]
+disable=
+    C0114, # missing-module-docstring
+    C0116, # missing-function-docstring
+
+[pre-commit-hook]
+disable=E0401, C0301, C0114, C0116
