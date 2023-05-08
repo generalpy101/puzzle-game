@@ -15,12 +15,9 @@ def encode_jwt_token(user_id, username):
 
 
 def decode_jwt_token(token):
-    try:
-        payload = jwt.decode(
-            token, current_app.config["SECRET_KEY"], algorithms=["HS256"]
-        )
-        return payload
-    except jwt.ExpiredSignatureError:
-        return None
-    except jwt.InvalidTokenError:
-        return None
+    payload = jwt.decode(token, current_app.config["SECRET_KEY"], algorithms=["HS256"])
+    if "exp" not in payload:
+        raise jwt.InvalidTokenError("Token does not contain expiration time")
+    if datetime.fromtimestamp(payload["exp"]) < datetime.utcnow():
+        raise jwt.ExpiredSignatureError("Token has expired")
+    return payload

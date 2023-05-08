@@ -1,4 +1,4 @@
-from treasure_hunt.models import db
+from app.db import db
 
 
 class RoleEnum:

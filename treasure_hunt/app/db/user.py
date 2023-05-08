@@ -1,8 +1,7 @@
+from app.db import db
+from app.db.roles import Role
 from flask_login.mixins import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
-
-from treasure_hunt.models import db
-from treasure_hunt.models.roles import Role
 
 roles_users = db.Table(
     "roles_users",
@@ -19,6 +18,8 @@ class User(db.Model, UserMixin):
     roles = db.relationship(
         "Role", secondary="roles_users", backref=db.backref("users", lazy="dynamic")
     )
+    cleared_rooms = db.Column(db.String(255), default="")
+    current_room = db.Column(db.Integer, default=0)
 
     @property
     def password(self):
@@ -27,6 +28,12 @@ class User(db.Model, UserMixin):
     @password.setter
     def password(self, password):
         self.password_hash = generate_password_hash(password)
+
+    @property
+    def cleared_rooms_list(self):
+        if self.cleared_rooms:
+            return self.cleared_rooms.split(",")
+        return []
 
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
@@ -37,8 +44,18 @@ class User(db.Model, UserMixin):
                 return True
         return False
 
+    def to_dict(self):
+        result = {
+            column.name: getattr(self, column.name)
+            for column in self.__table__.columns
+            if "password" not in column.name
+        }
+        result["current_room"] = result["current_room"] if result["current_room"] else 0
+        result["cleared_rooms"] = self.cleared_rooms_list
+        return result
+
     @staticmethod
-    def get_by_id(self, id):
+    def get_by_id(id):
         return User.query.get(id)
 
     def __repr__(self):

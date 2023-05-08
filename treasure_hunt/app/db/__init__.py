@@ -8,5 +8,5 @@ def init_db(app):
         db.create_all()
 
 
-from .roles import Role
+from .roles import Role, RoleFactory
 from .user import User
