@@ -8,6 +8,12 @@ from werkzeug.exceptions import BadRequest, Unauthorized
 auth_bp = Blueprint("auth", __name__)
 
 
+@auth_bp.route("/validate", methods=["GET"])
+@jwt_login_required
+def validate(user: User):
+    return {"message": "Valid token"}
+
+
 @auth_bp.route("/register", methods=["POST"])
 def register_user():
     data = request.get_json()

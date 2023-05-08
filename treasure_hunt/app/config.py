@@ -11,4 +11,4 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     DEBUG = True
     PORT = int(os.environ.get("PORT", 8000))
-    JWT_EXPIRATION_MINUTES = 60
+    JWT_EXPIRATION_MINUTES = 600

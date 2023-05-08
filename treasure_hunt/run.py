@@ -1,6 +1,7 @@
 import json
 
 from app import create_app
+from flask_cors import CORS
 from werkzeug.exceptions import HTTPException
 
 if __name__ == "__main__":
@@ -22,4 +23,5 @@ if __name__ == "__main__":
         response.content_type = "application/json"
         return response
 
+    CORS(app)
     app.run(port=8000, debug=True)
