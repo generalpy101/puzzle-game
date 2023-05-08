@@ -51,6 +51,6 @@ def validate_room_password(user):
         return BadRequest("Invalid room")
 
     if ROOM_PASSWORDS[room] != password:
-        return jsonify({"valid": False})
+        return jsonify({"valid": False}), 404
 
     return jsonify({"valid": True})
