@@ -35,6 +35,12 @@ class User(db.Model, UserMixin):
             return self.cleared_rooms.split(",")
         return []
 
+    @cleared_rooms_list.setter
+    def cleared_rooms_list(self, room):
+        rooms = self.cleared_rooms_list or []
+        rooms.append(str(room))
+        self.cleared_rooms = ",".join(rooms)
+
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
 

@@ -31,6 +31,11 @@ def register_user():
     if password1 != password2:
         return abort(400, "Passwords don't match")
 
+    # check if user exists
+    user = User.query.filter_by(username=username).first()
+    if user:
+        return abort(409, "User already exists")
+
     new_user = User(email=email, password=password1, username=username)
     new_user.roles.append(RoleFactory.create("user"))
     db.session.add(new_user)

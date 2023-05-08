@@ -34,7 +34,7 @@ def user_info(user: User):
 
 @core_bp.route("/validate_room", methods=["POST"])
 @jwt_login_required
-def validate_room_password(user):
+def validate_room_password(user: User):
     data = request.get_json()
     room = data.get("room")
     password = data.get("password")
@@ -51,6 +51,10 @@ def validate_room_password(user):
         return BadRequest("Invalid room")
 
     if ROOM_PASSWORDS[room] != password:
-        return jsonify({"valid": False}), 404
+        return jsonify({"valid": False})
 
+    user.cleared_rooms_list = room
+    user.current_room = room
+    db.session.add(user)
+    db.session.commit()
     return jsonify({"valid": True})

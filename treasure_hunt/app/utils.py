@@ -1,1 +1,17 @@
-ROOM_PASSWORDS = {}
+ROOM_PASSWORDS = {
+    2: "none",
+    3: "none",
+    4: "sphere",
+    5: "giraffelephant",
+    6: "library",
+    7: "purple",
+    8: "very close",
+    9: "very close",
+    10: "hell",
+    11: "heaven",
+    12: "ytinifnilast",
+    13: "kitten",
+    14: "australia",
+    15: "none",
+    16: "none",
+}
