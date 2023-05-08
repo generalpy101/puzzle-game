@@ -58,3 +58,13 @@ def validate_room_password(user: User):
     db.session.add(user)
     db.session.commit()
     return jsonify({"valid": True})
+
+
+@core_bp.route("/game_over", methods=["GET"])
+@jwt_login_required
+def game_over(user: User):
+    user.current_room = 0
+    user.cleared_rooms = ""
+    db.session.add(user)
+    db.session.commit()
+    return jsonify({"message": "Game over"})
